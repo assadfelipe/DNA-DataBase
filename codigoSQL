@@ -1,0 +1,58 @@
+Código SQL
+
+1- Criação da tabela: 
+
+CREATE TABLE "DNA".produto (
+	"ID" int4 NOT NULL,
+	descricao varchar NOT NULL,
+	CONSTRAINT produto_pkey PRIMARY KEY ("ID")
+);
+
+2 -Dados inseridos do tipo:
+
+1	Descrição 1
+2	Descrição 2
+3	Descrição 3
+4	Descrição 4
+5	Descrição 5
+6	Descrição 6
+7	Descrição 7
+8	Descrição 8
+9	Descrição 9
+.
+.
+.
+100	Descrição 100
+
+3 - Procedure pedido na prova
+
+CREATE OR REPLACE FUNCTION "DNA".consulta(product_id integer, d character varying, pagina integer, qtdade integer)
+ RETURNS TABLE(r_id integer, r_descricao character varying)
+ LANGUAGE plpgsql
+AS $function$
+declare
+	des varchar;
+	pag int;
+begin
+	pag = (pagina * qtdade) - qtdade;
+	
+	IF d is NULL THEN
+		des = '%';
+	else des = d;
+	end if;
+
+	if product_id is NULL then  
+		return query select * from "DNA".produto
+		where descricao like des
+		order by "ID"
+		limit qtdade offset pag;
+	else
+		return query
+		select * from "DNA".produto
+		where "ID" = product_id
+		order by "ID";
+	end if;
+end;
+$function$
+;
+
