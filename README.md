@@ -10,12 +10,6 @@ Fiz também o upload de um arquivo só com o SQL utilizado na prova.
 
 
 
-Usuário no BD: dna 
-
-Senha: dna2021
-
-
-
 Para fazer os testes, seguir o modelo abaixo:
 
 select consulta(null, null, 1, 10)
